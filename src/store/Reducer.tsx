@@ -1,5 +1,5 @@
 import {ItemTypes} from "../Types/Types";
-import {ActionTypes, ADD_ITEM_TO_LIST, CHANGE_INPUT_VALUE} from "./ActionTypes";
+import {ActionTypes, ADD_ITEM_TO_LIST, CHANGE_INPUT_VALUE, DELETE_ITEM_FROM_LIST} from "./ActionTypes";
 
 interface List {
     inputValue: string,
@@ -32,6 +32,15 @@ export default (state = defaultState, action:ActionTypes) => {
         });
         newState.inputValue = '';
 
+        return newState;
+    }
+
+    if (action.type === DELETE_ITEM_FROM_LIST) {
+        const newState:List = JSON.parse(JSON.stringify(state));
+
+        newState.list.splice(newState.list.findIndex(item => item.id === action.deleteId), 1);
+
+        console.log(newState.list);
         return newState;
     }
 

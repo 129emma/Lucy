@@ -4,7 +4,7 @@ import {Input} from "@material-ui/core";
 import {ItemTypes} from "../Types/Types";
 import TodoList from "../Components/TodoList";
 import store from "../store/Store";
-import {ActionTypes, ADD_ITEM_TO_LIST, CHANGE_INPUT_VALUE} from "../store/ActionTypes";
+import {ActionTypes, ADD_ITEM_TO_LIST, CHANGE_INPUT_VALUE, DELETE_ITEM_FROM_LIST} from "../store/ActionTypes";
 
 const TodoView: React.FunctionComponent = () => {
 
@@ -34,8 +34,12 @@ const TodoView: React.FunctionComponent = () => {
         store.dispatch(action);
     };
 
-    const handleDelete = () => {
-
+    const handleDelete = (id: number) => {
+        const action: ActionTypes = {
+            type: DELETE_ITEM_FROM_LIST,
+            deleteId: id
+        };
+        store.dispatch(action);
     };
 
     const handleStoreChange = () => {
