@@ -4,11 +4,13 @@ import {ItemTypes} from "../Types/Types";
 import {useEffect, useState} from "react";
 import TodoList from "../Components/TodoList";
 import store from "../store/Store";
+import {ActionTypes, CHANGE_INPUT_VALUE} from "../store/ActionTypes";
 
 const TodoView: React.FunctionComponent = () => {
 
     useEffect(() => {
-        setItemList(store.getState().list)
+
+        store.subscribe(handleStoreChange);
     },[]);
 
     const [itemList, setItemList] = useState<ItemTypes[]>([]);
@@ -20,11 +22,22 @@ const TodoView: React.FunctionComponent = () => {
     };
 
     const handleInput = (e: React.ChangeEvent<HTMLInputElement>) => {
-
+        const action: ActionTypes = {
+            type: CHANGE_INPUT_VALUE,
+            value:e.target.value
+        };
+        // Dispatch action to store
+        store.dispatch(action);
     };
 
     const handleDelete= () => {
 
+    };
+
+    const handleStoreChange = () => {
+        // Get data from store and set as new state
+        setItemList(store.getState().list);
+        setInputValue(store.getState().inputValue);
     };
 
     return (
