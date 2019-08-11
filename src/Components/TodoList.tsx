@@ -16,8 +16,8 @@ const TodoList: React.FunctionComponent<Props> = (props) => {
     return (
         <List>
             {props.items.map(todoItems => {
-                    return <TodoItem key={todoItems.itemId}
-                                     id={todoItems.itemId}
+                    return <TodoItem key={todoItems.id}
+                                     id={todoItems.id}
                                      itemText={todoItems.itemText}
                                      onDeleteItem={props.onDeleteItem}/>
                 }

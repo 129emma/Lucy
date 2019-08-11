@@ -1,5 +1,5 @@
 import {ItemTypes} from "../Types/Types";
-import {ActionTypes, CHANGE_INPUT_VALUE} from "./ActionTypes";
+import {ActionTypes, ADD_ITEM_TO_LIST, CHANGE_INPUT_VALUE} from "./ActionTypes";
 
 interface List {
     inputValue: string,
@@ -7,8 +7,8 @@ interface List {
 }
 
 const defaultState:List = {
-    inputValue: 'testInputValue',
-    list:[{itemText:'te',itemId:2},{itemText:'sd',itemId:3}]
+    inputValue: '',
+    list:[]
 };
 
 // Reducer only can accept state, it shouldn't modify state
@@ -22,5 +22,18 @@ export default (state = defaultState, action:ActionTypes) => {
         // return newState to store
         return newState;
     }
+
+    if (action.type === ADD_ITEM_TO_LIST) {
+        const newState:List = JSON.parse(JSON.stringify(state));
+
+        newState.list.push({
+            itemText:newState.inputValue,
+            id:Math.round(Math.random() * 100) * 3
+        });
+        newState.inputValue = '';
+
+        return newState;
+    }
+
     return state;
 }
