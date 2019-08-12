@@ -4,11 +4,13 @@ import {Input} from "@material-ui/core";
 import {ItemTypes} from "../Types/Types";
 import TodoList from "../Components/TodoList";
 import store from "../store/Store";
-import {addItemToList, changeInputValue, deleteItemFromList} from "../store/ActionCreator";
+import {addItemToList, changeInputValue, deleteItemFromList, getInitialList} from "../store/ActionCreator";
 
 const TodoView: React.FunctionComponent = () => {
 
     useEffect(() => {
+        const action = getInitialList();
+        store.dispatch(action);
         // Listen data change in store
         store.subscribe(handleStoreChange);
     }, []);
