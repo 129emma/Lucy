@@ -16,3 +16,8 @@ ___
 - store.dispatch
 - store.getState
 - store.subscribe
+
+---
+**Redux thunk vs saga**
+- Saga more suitable for large application with complex logic
+

@@ -4,6 +4,7 @@ export const CHANGE_INPUT_VALUE = 'CHANGE_INPUT_VALUE';
 export const ADD_ITEM_TO_LIST = 'ADD_ITEM_TO_LIST';
 export const DELETE_ITEM_FROM_LIST = 'DELETE_ITEM_FROM_LIST';
 export const INIT_LIST_DATA = 'INIT_LIST_DATA';
+export const GET_INIT_LIST_DATA = 'GET_INIT_LIST_DATA';
 
 export interface InputType {
     type: typeof CHANGE_INPUT_VALUE,
@@ -24,4 +25,8 @@ export interface InitialListType {
     initialData: ItemTypes[]
 }
 
-export type ActionTypes = InputType | AddItemType | DeleteItemType | InitialListType;
+export interface GetInitialList {
+    type: typeof GET_INIT_LIST_DATA
+}
+
+export type ActionTypes = InputType | AddItemType | DeleteItemType | InitialListType |GetInitialList;

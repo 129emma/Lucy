@@ -10,6 +10,7 @@ const TodoView: React.FunctionComponent = () => {
 
     useEffect(() => {
         const action = getInitialList();
+        
         store.dispatch(action);
         // Listen data change in store
         store.subscribe(handleStoreChange);
