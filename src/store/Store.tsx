@@ -1,9 +1,17 @@
-import {applyMiddleware, createStore} from 'redux';
-import Reducer from "./Reducer";
+import {applyMiddleware, combineReducers, createStore} from 'redux';
+import {todoViewReducer} from "./ToDoView/ToDoViewReducer";
 import thunk from "redux-thunk";
 import {composeWithDevTools} from "redux-devtools-extension";
+import {listReducer} from "./ToDoList/ListReducer";
 
-const store = createStore(Reducer, composeWithDevTools(
+const rootReducer = combineReducers({
+    list: listReducer,
+    todoView: todoViewReducer,
+});
+
+export type MainState = ReturnType<typeof rootReducer>;
+
+const store = createStore(rootReducer, composeWithDevTools(
     applyMiddleware(thunk)
 ));
 export default store;
