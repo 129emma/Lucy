@@ -2,10 +2,9 @@ import {applyMiddleware, combineReducers, createStore} from 'redux';
 import {todoViewReducer} from "./ToDoView/ToDoViewReducer";
 import thunk from "redux-thunk";
 import {composeWithDevTools} from "redux-devtools-extension";
-import {listReducer} from "./ToDoList/ListReducer";
 
 const rootReducer = combineReducers({
-    list: listReducer,
+    // list: listReducer,
     todoView: todoViewReducer,
 });
 

@@ -1,34 +1,44 @@
-import {InputTypes, ItemList, ItemTypes} from "../../Types/Types";
-import {ToDoViewActionTypes, ADD_INPUT_ITEM_TO_LIST, CHANGE_INPUT_VALUE} from "./ToDoViewActionTypes";
+import {InputTypes, ItemList} from "../../Types/Types";
+import {ToDoViewActionTypes} from "./ToDoViewActionTypes";
 
 type reducerTypes = ItemList & InputTypes;
 export const defaultState: reducerTypes = {
     inputValue: '',
-    itemList:[]
+    itemList: []
 };
 
 // Reducer only can accept state, it shouldn't modify state
-export function todoViewReducer (state = defaultState, action: ToDoViewActionTypes){
-    if (action.type === CHANGE_INPUT_VALUE) {
+export function todoViewReducer(state = defaultState, action: ToDoViewActionTypes) {
+    switch (action.type) {
+        case "INIT_LIST_DATA":
+            const listState: reducerTypes = JSON.parse(JSON.stringify(state));
+            listState.itemList = action.initialData;
 
-        // replace old state
-        const newState: reducerTypes = JSON.parse(JSON.stringify(state));
-        newState.inputValue = action.value;
+            return listState;
+        case "DELETE_ITEM_FROM_LIST":
+            const deleteState: reducerTypes = JSON.parse(JSON.stringify(state));
+            deleteState.itemList.splice(deleteState.itemList.findIndex(item => item.id === action.deleteId), 1);
 
-        // return newState to store
-        return newState;
+            return deleteState;
+
+        case "ADD_INPUT_ITEM_TO_LIST":
+            const inputState: reducerTypes = JSON.parse(JSON.stringify(state));
+
+            inputState.itemList!.push({
+                itemText: inputState.inputValue!,
+                id: Math.round(Math.random() * 100) * 3
+            });
+            inputState.inputValue = '';
+            console.log(inputState)
+            return inputState;
+        case "CHANGE_INPUT_VALUE":
+            // replace old state
+            const changeInputState: reducerTypes = JSON.parse(JSON.stringify(state));
+            changeInputState.inputValue = action.value;
+
+            // return newState to store
+            return changeInputState;
+        default:
+            return state;
     }
-
-    if (action.type === ADD_INPUT_ITEM_TO_LIST) {
-        const newState: reducerTypes = JSON.parse(JSON.stringify(state));
-
-        newState.itemList!.push({
-            itemText: newState.inputValue!,
-            id: Math.round(Math.random() * 100) * 3
-        });
-        newState.inputValue = '';
-
-        return newState;
-    }
-    return state;
 }
