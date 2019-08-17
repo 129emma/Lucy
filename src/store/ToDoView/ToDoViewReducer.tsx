@@ -29,7 +29,7 @@ export function todoViewReducer(state = defaultState, action: ToDoViewActionType
                 id: Math.round(Math.random() * 100) * 3
             });
             inputState.inputValue = '';
-            console.log(inputState)
+            console.log(inputState);
             return inputState;
         case "CHANGE_INPUT_VALUE":
             // replace old state

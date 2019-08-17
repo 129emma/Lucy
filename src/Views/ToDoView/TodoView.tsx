@@ -1,14 +1,16 @@
 import * as React from 'react';
-import {Input} from "@material-ui/core";
+import {Button, Input} from "@material-ui/core";
 import {ItemTypes} from "../../Types/Types";
 import TodoList from "../../Components/TodoList";
 import {MainState} from "../../store/Store";
 import {addInputItemToList, changeInputValue, getInitialListData, deleteItemFromList} from "../../store/ToDoView/ToDoViewActions";
 import {connect} from "react-redux";
+import { getLoginStatus } from '../../store/Login/LoginActions';
 
 interface State {
     itemList: ItemTypes[],
-    inputValue: string
+    inputValue: string,
+    loginStatus: boolean,
 }
 
 interface Props {
@@ -17,7 +19,9 @@ interface Props {
     getInitialListData: typeof getInitialListData,
     deleteItemFromList: typeof deleteItemFromList,
     inputValue: string,
-    itemList: ItemTypes[]
+    itemList: ItemTypes[],
+    loginStatus: boolean,
+    getLoginStatus: typeof getLoginStatus
 }
 
 class TodoView extends React.Component<Props, State> {
@@ -26,7 +30,8 @@ class TodoView extends React.Component<Props, State> {
         super(props);
         this.state = {
             inputValue:"",
-            itemList:[]
+            itemList:[],
+            loginStatus: false
         }
     }
 
@@ -34,7 +39,8 @@ class TodoView extends React.Component<Props, State> {
         return (
             <div>
 
-                <Input value={this.props.inputValue} placeholder={"type item"} onKeyPress={this.handleKeyPress} onChange={this.handleInput}/>
+                <Input value={this.props.inputValue} placeholder={"type to do, press Enter to save"} onKeyPress={this.handleKeyPress} onChange={this.handleInput}/>
+                <Button onClick={this.handleClick}>Test Button</Button>
                 {this.props.itemList.length > 0
                     ? <TodoList items={this.props.itemList} onDeleteItem={this.handleDelete}/>
                     : null
@@ -56,12 +62,17 @@ class TodoView extends React.Component<Props, State> {
     private handleDelete = (id: number) => {
         this.props.deleteItemFromList(id);
     };
+
+    private handleClick = () => {
+        this.props.getLoginStatus(this.props.loginStatus)
+    }
 }
 
 const mapStateToProps = (state: MainState) => {
     return {
         inputValue:state.todoView.inputValue,
-        itemList:state.todoView.itemList
+        itemList:state.todoView.itemList,
+        loginStatus:state.login.loginStatus
     }
 };
 
@@ -69,7 +80,8 @@ const mapDispatchToProps = {
     changeInputValue,
     addInputItemToList,
     getInitialListData,
-    deleteItemFromList
+    deleteItemFromList,
+    getLoginStatus
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(TodoView);

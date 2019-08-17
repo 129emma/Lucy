@@ -10,3 +10,7 @@ export interface ItemList {
 export interface InputTypes {
     inputValue: string
 }
+
+export interface LoginTypes {
+    loginStatus: boolean
+}
